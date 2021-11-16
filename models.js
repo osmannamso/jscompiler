@@ -19,6 +19,47 @@ class TreeNode {
 
         return `(${res})`;
     }
+
+    static decompile = (text) => {
+        let value = '';
+        let foundBrackets = 0;
+        let i = 0;
+        while (foundBrackets < 2) {
+            if (text[i] === '(' || text[i] === ')') {
+                foundBrackets += 1;
+            } else {
+                value += text[i];
+            }
+            i += 1;
+        }
+        let leftText = '';
+        let rightText;
+        if (text[i - 1] !== ')') {
+            leftText = '(';
+            let count = 1;
+            while (count > 0 && text[i]) {
+                leftText += text[i];
+                if (text[i] === '(') {
+                    count += 1;
+                } else if (text[i] === ')') {
+                    count -= 1;
+                }
+                i += 1;
+            }
+            if (text[i] === '(') {
+                rightText = text.slice(i, text.length - 1);
+            }
+        }
+
+        const res = value.length ? new TreeNode(+value) : null;
+        if (leftText) {
+            res.left = TreeNode.decompile(leftText);
+            if (rightText) {
+                res.right = TreeNode.decompile(rightText);
+            }
+        }
+        return res;
+    }
 }
 
 class LinkedList {
@@ -40,6 +81,22 @@ class LinkedList {
         } else {
             throw ERRORS.InfinityError;
         }
+    }
+
+    static decompile = (arr) => {
+        arr = JSON.parse(arr);
+        if (!arr.length) {
+            return null;
+        }
+        arr.reverse();
+        const head = new LinkedList(arr.pop());
+        let current = head;
+        while (arr.length) {
+            current.next = new LinkedList(arr.pop());
+            current = current.next;
+        }
+
+        return head;
     }
 
     static isValid = (node) => {

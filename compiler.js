@@ -23,19 +23,19 @@ function compileResult(code, type, params) {
         throw ERRORS.TypeMismatchError;
     }
     switch (res.constructor.name) {
-        case 'TreeNode':
+        case APP_TYPES.tree:
             compiled.value = TreeNode.compile(res);
             break;
-        case 'Array':
+        case APP_TYPES.array:
             compiled.value = ArrayType.compile(res);
             break;
-        case 'LinkedList':
+        case APP_TYPES.linkedList:
             compiled.value = LinkedList.compile(res);
             break;
-        case 'String':
+        case APP_TYPES.str:
             compiled.value = res;
             break;
-        case 'Number':
+        case APP_TYPES.int:
             compiled.value = res;
             break;
     }
@@ -44,3 +44,4 @@ function compileResult(code, type, params) {
 }
 
 exports.compileResult = compileResult;
+exports.APP_TYPES = APP_TYPES;
