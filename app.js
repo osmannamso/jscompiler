@@ -11,7 +11,7 @@ const express = require('express');
 const app = express();
 
 app.use(express.json());       // to support JSON-encoded bodies
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: true }));
 app.listen(APP_PORT, () => {
     console.log(`App running on ${APP_PORT} port`);
 });
