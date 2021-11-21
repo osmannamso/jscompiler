@@ -5,7 +5,7 @@ const {
     TreeNode,
     LinkedList
 } = require('./models');
-const APP_PORT = 3000;
+const APP_PORT = process.env.PORT || 3000;
 
 const express = require('express');
 const app = express();
