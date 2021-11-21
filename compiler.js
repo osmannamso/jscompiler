@@ -18,7 +18,22 @@ function compileResult(code, type, params) {
     let compiled = {
         value: null
     };
-    const res = solution.apply({}, params);
+    const res = solution.apply({}, params.map((p) => {
+        switch (APP_TYPES[p.type]) {
+            case APP_TYPES.tree:
+                return TreeNode.decompile(p.value);
+            case APP_TYPES.linkedList:
+                return LinkedList.decompile(p.value);
+            case APP_TYPES.int:
+                return +p.value;
+            case APP_TYPES.str:
+                return p.value;
+            case APP_TYPES.array:
+                return JSON.parse(p.value);
+            default:
+                throw ERRORS.TypeIsntSupported;
+        }
+    }));
     if (APP_TYPES[type] !== res.constructor.name) {
         throw ERRORS.TypeMismatchError;
     }

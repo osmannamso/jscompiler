@@ -31,6 +31,11 @@ app.post('/compile', (req, res) => {
                     error: ERRORS.InfinityError
                 });
                 break;
+            case ERRORS.TypeIsntSupported:
+                res.status(409).send({
+                    error: ERRORS.TypeIsntSupported
+                });
+                break;
             default:
                 console.log('error', e);
                 res.status(500).send(e);
